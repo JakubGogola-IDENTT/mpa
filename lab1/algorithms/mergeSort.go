@@ -1,7 +1,5 @@
 package algorithms
 
-import "fmt"
-
 func merge(arr, left, right []int) {
 	var i, j, k int
 
@@ -36,9 +34,8 @@ func MergeSort(arr []int) {
 		return
 	}
 
-	midd := len(arr) / 2
-
-	fmt.Println(midd)
+	lo, hi := bounds(arr)
+	midd := (lo+hi)/2 + 1
 
 	left := make([]int, len(arr[:midd]))
 	right := make([]int, len(arr[midd:]))
