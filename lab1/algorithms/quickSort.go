@@ -1,24 +1,19 @@
 package algorithms
 
-func bounds(array []int) (int, int) {
-	return 0, len(array) - 1
-}
+func partition(arr []int) int {
+	lo, hi := bounds(arr)
 
-// Hoare's partitioning
-func partition(array []int) int {
-	lo, hi := bounds(array)
-
-	pivot := array[(hi+lo)/2]
+	pivot := arr[(hi+lo)/2]
 
 	i := lo - 1
 	j := hi + 1
 
 	for {
-		for ok := true; ok; ok = array[i] < pivot {
+		for ok := true; ok; ok = arr[i] < pivot {
 			i++
 		}
 
-		for ok := true; ok; ok = array[j] > pivot {
+		for ok := true; ok; ok = arr[j] > pivot {
 			j--
 		}
 
@@ -26,17 +21,17 @@ func partition(array []int) int {
 			break
 		}
 
-		array[i], array[j] = array[j], array[i]
+		arr[i], arr[j] = arr[j], arr[i]
 	}
 
 	return j
 }
 
 // QuickSort implmentation using Hoare partitioning method
-func QuickSort(array []int) {
-	if lo, hi := bounds(array); lo < hi {
-		p := partition(array)
-		QuickSort(array[:p])
-		QuickSort(array[p+1:])
+func QuickSort(arr []int) {
+	if lo, hi := bounds(arr); lo < hi {
+		p := partition(arr)
+		QuickSort(arr[:p])
+		QuickSort(arr[p+1:])
 	}
 }
