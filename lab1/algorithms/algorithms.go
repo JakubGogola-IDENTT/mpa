@@ -13,6 +13,7 @@ func (a *Algorithm) Init(arraySize int) {
 // Run runs algorithm of given type
 func (a *Algorithm) Run(algType string) {
 	arr := generateArray(a.ArraySize)
+	a.Comps = 0
 
 	switch algType {
 	case MERGE:
@@ -26,4 +27,5 @@ func (a *Algorithm) Run(algType string) {
 	}
 
 	fmt.Println(arr)
+	fmt.Println(a.Comps)
 }
