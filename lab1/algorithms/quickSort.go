@@ -34,9 +34,7 @@ func partition(array []int) int {
 
 // QuickSort implmentation using Hoare partitioning method
 func QuickSort(array []int) {
-	lo, hi := bounds(array)
-
-	if lo < hi {
+	if lo, hi := bounds(array); lo < hi {
 		p := partition(array)
 		QuickSort(array[:p])
 		QuickSort(array[p+1:])
