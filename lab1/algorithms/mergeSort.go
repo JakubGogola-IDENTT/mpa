@@ -1,9 +1,11 @@
 package algorithms
 
-func merge(arr, left, right []int) {
+func (a *Algorithm) merge(arr, left, right []int) {
 	var i, j, k int
 
+	a.Comps++
 	for i < len(left) && j < len(right) {
+		a.Comps++
 		if left[i] <= right[j] {
 			arr[k] = left[i]
 			i++
@@ -13,23 +15,29 @@ func merge(arr, left, right []int) {
 		}
 
 		k++
+		a.Comps++
 	}
 
+	a.Comps++
 	for i < len(left) {
 		arr[k] = left[i]
 		i++
 		k++
+		a.Comps++
 	}
 
+	a.Comps++
 	for j < len(right) {
 		arr[k] = right[j]
 		j++
 		k++
+		a.Comps++
 	}
 }
 
 // MergeSort implementation
-func MergeSort(arr []int) {
+func (a *Algorithm) MergeSort(arr []int) {
+	a.Comps++
 	if len(arr) <= 1 {
 		return
 	}
@@ -43,7 +51,7 @@ func MergeSort(arr []int) {
 	copy(left, arr[:midd])
 	copy(right, arr[midd:])
 
-	MergeSort(left)
-	MergeSort(right)
-	merge(arr, left, right)
+	a.MergeSort(left)
+	a.MergeSort(right)
+	a.merge(arr, left, right)
 }
