@@ -12,20 +12,20 @@ func (a *Algorithm) Init(arraySize int) {
 
 // Run runs algorithm of given type
 func (a *Algorithm) Run(algType string) {
-	arr := generateArray(a.ArraySize)
+	a.Array = generateArray(a.ArraySize)
 	a.Comps = 0
 
 	switch algType {
 	case MERGE:
-		a.MergeSort(arr)
+		a.MergeSort(a.Array)
 		break
 	case QUICK:
-		a.QuickSort(arr)
+		a.QuickSort(a.Array)
 		break
 	default:
 		log.Panic("Invalid algorithm type")
 	}
 
-	fmt.Println(arr)
+	fmt.Println(a.Array)
 	fmt.Println(a.Comps)
 }

@@ -4,6 +4,7 @@ package algorithms
 type Algorithm struct {
 	Comps     int
 	ArraySize int
+	Array     []int
 }
 
 const (
