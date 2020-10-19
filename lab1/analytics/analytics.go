@@ -44,7 +44,7 @@ func (a *Analytics) RunTests() {
 	f, w := a.newFileWithWriter()
 	defer f.Close()
 
-	_, err := w.WriteString("input_size,repetitions_num,comparisons_num\n")
+	_, err := w.WriteString("input_size,comparisons_num\n")
 	checkError(err)
 
 	alg := alg.Algorithm{}
@@ -55,7 +55,7 @@ func (a *Analytics) RunTests() {
 		for j := 0; j < a.repetitions; j++ {
 			alg.Run(a.algorithmType)
 
-			row := fmt.Sprintf("%d,%d,%d\n", i, j, alg.Comps)
+			row := fmt.Sprintf("%d,%d\n", i, alg.Comps)
 
 			_, err := w.WriteString(row)
 			checkError(err)
