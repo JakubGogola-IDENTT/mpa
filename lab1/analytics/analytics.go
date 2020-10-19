@@ -52,8 +52,6 @@ func (a *Analytics) RunTests() {
 	for i := a.lowerBound; i <= a.upperBound; i += a.step {
 		alg.SetSize(i)
 
-		fmt.Println(i)
-
 		for j := 0; j < a.repetitions; j++ {
 			alg.Run(a.algorithmType)
 
