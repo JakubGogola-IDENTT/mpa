@@ -1,14 +1,9 @@
 package main
 
-import (
-	"lab1/algorithms"
-)
+import anal "lab1/analytics"
 
 func main() {
-	alg := algorithms.Algorithm{}
+	a := anal.Analytics{}
 
-	for i := 100; i <= 100000; i += 100 {
-		alg.Init(i)
-		alg.Run(algorithms.QUICK)
-	}
+	a.RunTests()
 }

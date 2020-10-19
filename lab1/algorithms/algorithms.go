@@ -4,8 +4,8 @@ import (
 	"log"
 )
 
-// Init initializes sorting algorithm with given array size
-func (a *Algorithm) Init(arraySize int) {
+// SetSize initializes sorting algorithm with given array size
+func (a *Algorithm) SetSize(arraySize int) {
 	a.ArraySize = arraySize
 }
 
