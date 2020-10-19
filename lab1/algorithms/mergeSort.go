@@ -3,7 +3,6 @@ package algorithms
 func (a *Algorithm) merge(arr, left, right []int) {
 	var i, j, k int
 
-	a.Comps++
 	for i < len(left) && j < len(right) {
 		a.Comps++
 		if left[i] <= right[j] {
@@ -15,29 +14,23 @@ func (a *Algorithm) merge(arr, left, right []int) {
 		}
 
 		k++
-		a.Comps++
 	}
 
-	a.Comps++
 	for i < len(left) {
 		arr[k] = left[i]
 		i++
 		k++
-		a.Comps++
 	}
 
-	a.Comps++
 	for j < len(right) {
 		arr[k] = right[j]
 		j++
 		k++
-		a.Comps++
 	}
 }
 
 // MergeSort implementation
 func (a *Algorithm) MergeSort(arr []int) {
-	a.Comps++
 	if len(arr) <= 1 {
 		return
 	}

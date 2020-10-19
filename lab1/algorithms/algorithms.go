@@ -1,7 +1,6 @@
 package algorithms
 
 import (
-	"fmt"
 	"log"
 )
 
@@ -25,7 +24,4 @@ func (a *Algorithm) Run(algType string) {
 	default:
 		log.Panic("Invalid algorithm type")
 	}
-
-	fmt.Println(a.Array)
-	fmt.Println(a.Comps)
 }

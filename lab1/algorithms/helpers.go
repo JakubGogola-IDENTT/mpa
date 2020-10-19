@@ -4,20 +4,27 @@ import (
 	crand "crypto/rand"
 	"log"
 	"math/big"
+	"math/rand"
 )
 
 func bounds(arr []int) (int, int) {
 	return 0, len(arr) - 1
 }
 
-func getRandomInt() int {
-	result, err := crand.Int(crand.Reader, big.NewInt(200))
+func getRandomInt() (n int) {
+	result, err := crand.Int(crand.Reader, big.NewInt(100))
 
 	if err != nil {
 		log.Panic(err)
 	}
 
-	return int(result.Int64())
+	n = int(result.Int64())
+
+	if rand.Int()%2 == 1 {
+		return -n
+	}
+
+	return n
 }
 
 func generateArray(size int) (arr []int) {

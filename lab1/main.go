@@ -6,6 +6,9 @@ import (
 
 func main() {
 	alg := algorithms.Algorithm{}
-	alg.Init(10)
-	alg.Run(algorithms.MERGE)
+
+	for i := 100; i <= 100000; i += 100 {
+		alg.Init(i)
+		alg.Run(algorithms.QUICK)
+	}
 }

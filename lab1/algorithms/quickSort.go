@@ -19,7 +19,6 @@ func (a *Algorithm) partition(arr []int) int {
 			a.Comps++
 		}
 
-		a.Comps++
 		if i >= j {
 			break
 		}
@@ -32,9 +31,11 @@ func (a *Algorithm) partition(arr []int) int {
 
 // QuickSort implmentation using Hoare partitioning method
 func (a *Algorithm) QuickSort(arr []int) {
-	if lo, hi := bounds(arr); lo < hi {
-		p := a.partition(arr)
-		a.QuickSort(arr[:p])
-		a.QuickSort(arr[p+1:])
+	if lo, hi := bounds(arr); lo >= hi {
+		return
 	}
+
+	p := a.partition(arr)
+	a.QuickSort(arr[:p])
+	a.QuickSort(arr[p+1:])
 }
