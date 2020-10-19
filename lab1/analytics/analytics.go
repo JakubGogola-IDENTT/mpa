@@ -44,7 +44,7 @@ func (a *Analytics) RunTests() {
 	f, w := a.newFileWithWriter()
 	defer f.Close()
 
-	_, err := w.WriteString("input_size,repetition_num,comparisons_num\n")
+	_, err := w.WriteString("input_size,repetitions_num,comparisons_num\n")
 	checkError(err)
 
 	alg := alg.Algorithm{}
