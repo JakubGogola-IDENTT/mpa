@@ -12,8 +12,8 @@ func (a *Analytics) RunTests() {
 	p := perm.Permutation{}
 
 	f, w := a.newFileWithWriter()
-	defer f.Close()
 	defer w.Flush()
+	defer f.Close()
 
 	_, err := w.WriteString("n,cycles,records,fixed_points\n")
 	checkError(err)
