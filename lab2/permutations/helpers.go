@@ -17,6 +17,5 @@ func nextInt(n int) int {
 }
 
 func remove(slice []int, idx int) []int {
-	// TODO: check if we should check slice bounds here
 	return append(slice[:idx], slice[idx+1:]...)
 }
