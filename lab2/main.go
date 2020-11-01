@@ -1,7 +1,15 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"lab2/permutations"
+)
 
 func main() {
-	fmt.Println("Hello, world!")
+	p := permutations.Permutation{}
+
+	p.SetSize(10)
+	p.Permute()
+
+	fmt.Println(p.Perm)
 }
