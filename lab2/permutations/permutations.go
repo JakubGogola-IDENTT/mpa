@@ -1,5 +1,7 @@
 package permutations
 
+import "fmt"
+
 // Init initializes permutation
 func (p *Permutation) Init() {
 
@@ -12,19 +14,29 @@ func (p *Permutation) SetSize(size int) {
 
 // Permute permutes permutation
 func (p *Permutation) Permute() {
-	p.Perm = make([][]int, p.Size)
+	perm := make([]int, p.Size)
 
-	for i := range p.Perm {
-		p.Perm[i] = make([]int, 2)
-
-		value := i + 1
-
-		p.Perm[i][0], p.Perm[i][1] = value, value
+	for i := range perm {
+		perm[i] = i
 	}
 
-	for i := range p.Perm {
-		j := nextInt(p.Size)
+	unpermuted := make([]int, p.Size)
+	copy(unpermuted, perm)
 
-		p.Perm[i][1], p.Perm[j][1] = p.Perm[j][1], p.Perm[i][1]
+	fmt.Println(unpermuted)
+
+	for i := range perm {
+		idx := nextInt(len(unpermuted))
+
+		perm[i] = unpermuted[idx]
+
+		unpermuted = remove(unpermuted, idx)
 	}
+
+	p.Perm = perm
+}
+
+// Cycles returns number of cycles in permutation
+func (p *Permutation) Cycles() {
+
 }
