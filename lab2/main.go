@@ -8,9 +8,14 @@ import (
 func main() {
 	p := permutations.Permutation{}
 
-	p.SetSize(10)
-	p.Permute()
+	for i := 100; i <= 10000; i += 100 {
+		p.SetSize(i)
 
-	fmt.Println(p.Perm)
-	fmt.Println(p.Cycles())
+		fmt.Println(i)
+
+		for j := 0; j < 500; j++ {
+			p.Permute()
+			p.Properties()
+		}
+	}
 }

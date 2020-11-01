@@ -1,7 +1,5 @@
 package permutations
 
-import "fmt"
-
 // Init initializes permutation
 func (p *Permutation) Init() {
 
@@ -23,8 +21,6 @@ func (p *Permutation) Permute() {
 	unpermuted := make([]int, p.Size)
 	copy(unpermuted, perm)
 
-	fmt.Println(perm)
-
 	for i := range perm {
 		idx := nextInt(len(unpermuted))
 
@@ -36,12 +32,27 @@ func (p *Permutation) Permute() {
 	p.Perm = perm
 }
 
-// Cycles returns number of cycles in permutation
-func (p *Permutation) Cycles() (count int) {
+// Properties returns numbers of cycles, records and fixed points
+func (p *Permutation) Properties() (cycles, records, fixedPoints int) {
 	visited := make(map[int]bool)
 	perm := p.Perm
 
-	for i := range perm {
+	for i, value := range perm {
+		slice := perm[:i]
+
+		isRecord := true && len(slice) > 1
+
+		for _, v := range slice {
+			if v >= value {
+				isRecord = false
+				break
+			}
+		}
+
+		if isRecord {
+			records++
+		}
+
 		if _, ok := visited[i]; ok {
 			continue
 		}
@@ -50,13 +61,18 @@ func (p *Permutation) Cycles() (count int) {
 		next := perm[start]
 		visited[start] = true
 
+		if start == next {
+			fixedPoints++
+		}
+
 		for next != start {
 			visited[next] = true
+
 			next = perm[next]
 		}
 
-		count++
+		cycles++
 	}
 
-	return count
+	return cycles, records, fixedPoints
 }
