@@ -23,7 +23,7 @@ func (p *Permutation) Permute() {
 	unpermuted := make([]int, p.Size)
 	copy(unpermuted, perm)
 
-	fmt.Println(unpermuted)
+	fmt.Println(perm)
 
 	for i := range perm {
 		idx := nextInt(len(unpermuted))
@@ -37,6 +37,26 @@ func (p *Permutation) Permute() {
 }
 
 // Cycles returns number of cycles in permutation
-func (p *Permutation) Cycles() {
+func (p *Permutation) Cycles() (count int) {
+	visited := make(map[int]bool)
+	perm := p.Perm
 
+	for i := range perm {
+		if _, ok := visited[i]; ok {
+			continue
+		}
+
+		start := i
+		next := perm[start]
+		visited[start] = true
+
+		for next != start {
+			visited[next] = true
+			next = perm[next]
+		}
+
+		count++
+	}
+
+	return count
 }

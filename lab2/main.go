@@ -12,4 +12,5 @@ func main() {
 	p.Permute()
 
 	fmt.Println(p.Perm)
+	fmt.Println(p.Cycles())
 }
