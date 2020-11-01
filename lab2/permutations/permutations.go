@@ -35,7 +35,7 @@ func (p *Permutation) Properties() (cycles, records, fixedPoints int) {
 	for i, value := range perm {
 		slice := perm[:i]
 
-		isRecord := true && len(slice) > 1
+		isRecord := true
 
 		for _, v := range slice {
 			if v >= value {
