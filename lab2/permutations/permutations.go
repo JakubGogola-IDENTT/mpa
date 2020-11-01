@@ -1,10 +1,5 @@
 package permutations
 
-// Init initializes permutation
-func (p *Permutation) Init() {
-
-}
-
 // SetSize sets size of permutation
 func (p *Permutation) SetSize(size int) {
 	p.Size = size
