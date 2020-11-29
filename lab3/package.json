@@ -17,8 +17,5 @@
     "eslint-plugin-prettier": "^3.1.4",
     "prettier": "^2.2.1"
   },
-  "type": "module",
-  "dependencies": {
-    "eslint-plugin-import": "^2.22.1"
-  }
+  "type": "module"
 }

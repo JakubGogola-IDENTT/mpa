@@ -1,4 +1,4 @@
-import { DelaunayRecursive } from './algorithms/DelaunayRecursive.js';
+import { DelaunayRecursive } from './algorithms/recursive/DelaunayRecursive.js';
 
 const recursive = DelaunayRecursive.create(
     [[1.1, 2.3],
