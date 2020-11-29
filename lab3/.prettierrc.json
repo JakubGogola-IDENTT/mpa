@@ -1,0 +1,7 @@
+
+{
+    "parser": "babel",
+    "tabWidth": 4,
+    "singleQuote": true,
+    "arrowParens": "avoid"
+}
