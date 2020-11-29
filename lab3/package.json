@@ -1,0 +1,11 @@
+{
+  "name": "lab3",
+  "version": "1.0.0",
+  "description": "\"Delaunay triangulation anlaysis\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
