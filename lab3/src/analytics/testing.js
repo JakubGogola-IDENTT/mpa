@@ -1,4 +1,4 @@
-import fs, { WriteStream } from 'fs';
+import fs from 'fs';
 import { DelaunayRecursive } from '../algorithms/recursive/DelaunayRecursive.js';
 import { DelaunayIterative } from '../algorithms/iterative/DelaunayIterative.js';
 import { generatePoints } from './generatePoints.js';
@@ -21,6 +21,8 @@ export const testing = (
 ) => {
     const ws = fs.createWriteStream(path);
 
+    ws.write(`n,iters\n`);
+
     for (let i = lowerBound; i <= upperBound; i += step) {
         console.log(`Progress: ${i}`);
 
@@ -31,7 +33,7 @@ export const testing = (
 
             const [, iterations] = algorithm.triangulate();
 
-            ws.write(`${i},${j},${iterations}\n`);
+            ws.write(`${i},${iterations}\n`);
         }
     }
 
