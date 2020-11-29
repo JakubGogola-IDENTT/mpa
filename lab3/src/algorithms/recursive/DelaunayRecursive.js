@@ -1,3 +1,5 @@
+import { Delaunay } from '../Delaunay.js';
+
 const ccw = ([ax, ay], [bx, by], [cx, cy]) =>
     (bx - ax) * (cy - ay) - (by - ay) * (cx - ax) > 0;
 
@@ -129,7 +131,7 @@ const deleteEdge = q => {
     splice(q.sym, q.sym.oprev);
 };
 
-const delaunay = s => {
+const delaunay = (s, iters) => {
     let a;
     let b;
     let c;
@@ -167,8 +169,8 @@ const delaunay = s => {
         };
     } // |S| >= 4
     const halfLength = Math.ceil(s.length / 2);
-    const left = delaunay(s.slice(0, halfLength));
-    const right = delaunay(s.slice(halfLength));
+    const left = delaunay(s.slice(0, halfLength), iters);
+    const right = delaunay(s.slice(halfLength), iters);
 
     let ldo = left.le;
     let ldi = left.re;
@@ -177,6 +179,7 @@ const delaunay = s => {
 
     // Compute the lower common tangent of L and R
     do {
+        iters++;
         if (leftOf(rdi.orig, ldi)) ldi = ldi.lnext;
         else if (rightOf(ldi.orig, rdi)) rdi = rdi.rprev;
         else break;
@@ -189,6 +192,7 @@ const delaunay = s => {
 
     // This is the merge loop.
     do {
+        iters++;
         // Locate the first L point (lcand.Dest) to be encountered by the rising bubble,
         // and delete L edges out of base1.Dest that fail the circle test.
         let lcand = basel.sym.onext;
@@ -196,6 +200,7 @@ const delaunay = s => {
             while (
                 inCircle(basel.dest, basel.orig, lcand.dest, lcand.onext.dest)
             ) {
+                iters++;
                 t = lcand.onext;
                 deleteEdge(lcand);
                 lcand = t;
@@ -208,6 +213,7 @@ const delaunay = s => {
             while (
                 inCircle(basel.dest, basel.orig, rcand.dest, rcand.oprev.dest)
             ) {
+                iters++;
                 t = rcand.oprev;
                 deleteEdge(rcand);
                 rcand = t;
@@ -237,12 +243,14 @@ const delaunay = s => {
     };
 };
 
-export class DelaunayRecursive {
+export class DelaunayRecursive extends Delaunay {
     /**
      * @param {Array<number>[]} points
      */
     constructor(points = []) {
+        super('recursive');
         this.points = points;
+        this.iterations = 0;
     }
 
     static create(points = []) {
@@ -262,13 +270,17 @@ export class DelaunayRecursive {
         });
 
         // Remove duplicates
-        for (let i = pts.length - 1; i >= 1; i--)
-            if (pts[i][0] === pts[i - 1][0] && pts[i][1] === pts[i - 1][1])
+        for (let i = pts.length - 1; i >= 1; i--) {
+            this.iterations++;
+
+            if (pts[i][0] === pts[i - 1][0] && pts[i][1] === pts[i - 1][1]) {
                 pts.splice(i, 1); // Costly operation, but there shouldn't be that many duplicates
+            }
+        }
 
         if (pts.length < 2) return [];
 
-        let quadEdge = delaunay(pts).le;
+        let quadEdge = delaunay(pts, this.iterations).le;
 
         // All edges marked false
         const faces = [];
@@ -276,21 +288,27 @@ export class DelaunayRecursive {
         const queue = [quadEdge];
 
         // Mark all outer edges as visited
-        while (leftOf(quadEdge.onext.dest, quadEdge)) quadEdge = quadEdge.onext;
+        while (leftOf(quadEdge.onext.dest, quadEdge)) {
+            this.iterations++;
+            quadEdge = quadEdge.onext;
+        }
 
         let curr = quadEdge;
         do {
+            this.iterations++;
             queue.push(curr.sym);
             curr.mark = true;
             curr = curr.lnext;
         } while (curr !== quadEdge);
 
         do {
+            this.iterations++;
             const edge = queue[queueIndex++];
             if (!edge.mark) {
                 // Stores the edges for a visited triangle. Also pushes sym (neighbour) edges on stack to visit later.
                 curr = edge;
                 do {
+                    this.iterations++;
                     faces.push(curr.orig);
                     if (!curr.sym.mark) queue.push(curr.sym);
 
@@ -300,6 +318,6 @@ export class DelaunayRecursive {
             }
         } while (queueIndex < queue.length);
 
-        return faces;
+        return [faces, this.iterations];
     }
 }

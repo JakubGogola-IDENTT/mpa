@@ -13,6 +13,8 @@ export class Triangle {
 
         this.radius = NaN;
         this.center = null;
+
+        this.calcCircumcircle();
     }
 
     calcCircumcircle() {

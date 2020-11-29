@@ -2,13 +2,16 @@
 import { Vertex } from './Vertex.js';
 import { Edge } from './Edge.js';
 import { Triangle } from './Triangle.js';
+import { Delaunay } from '../Delaunay.js';
 
-export class DelaunayIterative {
+export class DelaunayIterative extends Delaunay {
     /**
-     * @param {Vertex[]} vertices
+     * @param {Vertex[]} points
      */
-    constructor(vertices) {
-        this.vertices = vertices;
+    constructor(points) {
+        super('iterative');
+        this.vertices = points.map(point => Vertex.fromArray(point));
+        this.iterations = 0;
     }
 
     /**
@@ -30,6 +33,7 @@ export class DelaunayIterative {
         let maxX = maxY;
 
         this.vertices.forEach(vertex => {
+            this.iterations++;
             minX = Math.min(minX, vertex.x);
             minY = Math.min(minX, vertex.y);
             maxX = Math.max(maxX, vertex.x);
@@ -56,6 +60,7 @@ export class DelaunayIterative {
 
         // Remove triangles with circumcircles containing the vertex
         const trianglesFiltered = triangles.filter(triangle => {
+            this.iterations++;
             if (triangle.inCircumcircle(vertex)) {
                 edges.push(new Edge(triangle.v0, triangle.v1));
                 edges.push(new Edge(triangle.v1, triangle.v2));
@@ -70,6 +75,7 @@ export class DelaunayIterative {
 
         // Create new triangles from the unique edges and new vertex
         uqEdges.forEach(edge => {
+            this.iterations++;
             trianglesFiltered.push(new Triangle(edge.v0, edge.v1, vertex));
         });
 
@@ -83,10 +89,12 @@ export class DelaunayIterative {
     uniqueEdges(edges) {
         const uniqueEdges = [];
         for (let i = 0; i < edges.length; ++i) {
+            this.iterations++;
             let isUnique = true;
 
             // See if edge is unique
             for (let j = 0; j < edges.length; ++j) {
+                this.iterations++;
                 if (i !== j && edges[i].equals(edges[j])) {
                     isUnique = false;
                     break;
@@ -103,21 +111,30 @@ export class DelaunayIterative {
     }
 
     triangulate() {
-        const superTriangle = this.superTriangle();
+        const st = this.superTriangle();
 
-        let triangles = [superTriangle];
+        let triangles = [st];
 
         this.vertices.forEach(vertex => {
-            triangles.addVertex(vertex, triangles);
+            this.iterations++;
+            this.addVertex(vertex, triangles);
         });
 
-        const { v0: sv0, v1: sv1, v2: sv2 } = superTriangle;
-        const stvs = [sv0, sv1, sv2];
-
         triangles = triangles.filter(
-            ({ v0, v1, v2 }) => ![v0, v1, v2].some(v => stvs.includes(v))
+            triangle =>
+                !(
+                    triangle.v0 === st.v0 ||
+                    triangle.v0 === st.v1 ||
+                    triangle.v0 === st.v2 ||
+                    triangle.v1 === st.v0 ||
+                    triangle.v1 === st.v1 ||
+                    triangle.v1 === st.v2 ||
+                    triangle.v2 === st.v0 ||
+                    triangle.v2 === st.v1 ||
+                    triangle.v2 === st.v2
+                )
         );
 
-        return triangles;
+        return [triangles, this.iterations];
     }
 }
