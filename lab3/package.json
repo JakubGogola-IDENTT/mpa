@@ -17,5 +17,8 @@
     "eslint-plugin-prettier": "^3.1.4",
     "prettier": "^2.2.1"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "mersenne-twister": "^1.1.0"
+  }
 }
