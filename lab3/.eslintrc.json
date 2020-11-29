@@ -5,6 +5,7 @@
         "jsdoc/require-param-description": "off",
         "jsdoc/require-returns-description": "off",
         "max-classes-per-file": "off",
-        "no-plusplus": "off"
+        "no-plusplus": "off",
+        "import/extensions": "off"
     }
 }
