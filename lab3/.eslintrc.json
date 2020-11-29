@@ -1,0 +1,11 @@
+{
+    "extends": ["airbnb", "plugin:prettier/recommended", "plugin:jsdoc/recommended"],
+    "rules": {
+        "import/prefer-default-export": "off",
+        "jsdoc/require-param-description": "off",
+        "jsdoc/require-returns-description": "off",
+        "max-classes-per-file": "off",
+        "no-plusplus": "off",
+        "import/extensions": "off"
+    }
+}
