@@ -117,7 +117,7 @@ export class DelaunayIterative extends Delaunay {
 
         this.vertices.forEach(vertex => {
             this.iterations++;
-            this.addVertex(vertex, triangles);
+            triangles = this.addVertex(vertex, triangles);
         });
 
         triangles = triangles.filter(

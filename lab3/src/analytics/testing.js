@@ -1,6 +1,4 @@
 import fs from 'fs';
-import { DelaunayRecursive } from '../algorithms/recursive/DelaunayRecursive.js';
-import { DelaunayIterative } from '../algorithms/iterative/DelaunayIterative.js';
 import { generatePoints } from './generatePoints.js';
 
 /**
@@ -15,7 +13,7 @@ export const testing = (
     instance,
     path,
     lowerBound = 100,
-    upperBound = 5000,
+    upperBound = 1000,
     step = 100,
     repetitions = 500
 ) => {
