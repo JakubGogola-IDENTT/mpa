@@ -2,3 +2,7 @@ books
 *.png
 node_modules
 .DS_Store
+
+.ipynb_checkpoints
+.vscode
+
