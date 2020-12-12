@@ -13,7 +13,7 @@ import (
 func (a *Analytics) Init() {
 	flag.IntVar(&a.lowerBound, "l", 100, "lower size of input")
 	flag.IntVar(&a.upperBound, "u", 10000, "upper size of input")
-	flag.IntVar(&a.step, "s", 500, "step of increasing input size")
+	flag.IntVar(&a.step, "s", 100, "step of increasing input size")
 	flag.IntVar(&a.repetitions, "r", 1000, "number of repetitions for given input size")
 
 	flag.Parse()
