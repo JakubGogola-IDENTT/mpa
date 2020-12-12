@@ -29,7 +29,6 @@ func (a *Analytics) RunTests() {
 
 	w := bufio.NewWriter(f)
 
-	defer w.Flush()
 	defer f.Close()
 
 	_, err = w.WriteString("n,max_load,empty\n")
@@ -69,5 +68,7 @@ func (a *Analytics) RunTests() {
 				log.Fatal(err)
 			}
 		}
+
+		w.Flush()
 	}
 }
