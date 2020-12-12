@@ -1,16 +1,12 @@
 package main
 
 import (
-	"fmt"
-	"lab4/bins"
+	anal "lab4/analytics"
 )
 
 func main() {
-	b := bins.Bins{}
+	a := anal.Analytics{}
 
-	b.SetBallsAndBins(200, 100)
-
-	b.Assign()
-
-	fmt.Println(b.GetBins())
+	a.Init()
+	a.RunTests()
 }
