@@ -13,7 +13,7 @@ export const testing = (
     instance,
     path,
     lowerBound = 100,
-    upperBound = 1000,
+    upperBound = 5000,
     step = 100,
     repetitions = 500
 ) => {

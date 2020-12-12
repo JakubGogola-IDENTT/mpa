@@ -131,17 +131,20 @@ const deleteEdge = q => {
     splice(q.sym, q.sym.oprev);
 };
 
-const delaunay = (s, iters) => {
+const delaunay = s => {
     let a;
     let b;
     let c;
     let t;
+
+    let iters = 0;
 
     if (s.length === 2) {
         a = makeEdge(s[0], s[1]);
         return {
             le: a,
             re: a.sym,
+            iters,
         };
     }
     if (s.length === 3) {
@@ -154,6 +157,7 @@ const delaunay = (s, iters) => {
             return {
                 le: a,
                 re: b.sym,
+                iters,
             };
         }
         if (ccw(s[0], s[2], s[1])) {
@@ -161,21 +165,26 @@ const delaunay = (s, iters) => {
             return {
                 le: c.sym,
                 re: c,
+                iters,
             };
         } // All three points are colinear
         return {
             le: a,
             re: b.sym,
+            iters,
         };
     } // |S| >= 4
     const halfLength = Math.ceil(s.length / 2);
-    const left = delaunay(s.slice(0, halfLength), iters);
-    const right = delaunay(s.slice(halfLength), iters);
+    const left = delaunay(s.slice(0, halfLength));
+    const right = delaunay(s.slice(halfLength));
 
     let ldo = left.le;
     let ldi = left.re;
     let rdi = right.le;
     let rdo = right.re;
+
+    iters += left.iters;
+    iters += right.iters;
 
     // Compute the lower common tangent of L and R
     do {
@@ -240,6 +249,7 @@ const delaunay = (s, iters) => {
     return {
         le: ldo,
         re: rdo,
+        iters,
     };
 };
 
@@ -280,7 +290,11 @@ export class DelaunayRecursive extends Delaunay {
 
         if (pts.length < 2) return [];
 
-        let quadEdge = delaunay(pts, this.iterations).le;
+        const { le, iters } = delaunay(pts, this.iterations);
+
+        let quadEdge = le;
+
+        this.iterations += iters;
 
         // All edges marked false
         const faces = [];
