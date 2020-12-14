@@ -31,7 +31,7 @@ func (a *Analytics) RunTests() {
 
 	defer f.Close()
 
-	_, err = w.WriteString("n,max_load,empty\n")
+	_, err = w.WriteString("n,empty,max_load\n")
 
 	if err != nil {
 		log.Fatal(err)
@@ -62,7 +62,7 @@ func (a *Analytics) RunTests() {
 				}
 			}
 
-			_, err := w.WriteString(fmt.Sprintf("%d,%d,%d\n", n, maxLoad, empty))
+			_, err := w.WriteString(fmt.Sprintf("%d,%d,%d\n", n, empty, maxLoad))
 
 			if err != nil {
 				log.Fatal(err)
