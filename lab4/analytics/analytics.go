@@ -62,7 +62,7 @@ func (a *Analytics) RunTests() {
 				}
 			}
 
-			_, err := w.WriteString(fmt.Sprintf("%d,%d,%d\n", n, empty, maxLoad))
+			_, err := w.WriteString(fmt.Sprintf("%d,%d,%d\n", n, maxLoad, empty))
 
 			if err != nil {
 				log.Fatal(err)
