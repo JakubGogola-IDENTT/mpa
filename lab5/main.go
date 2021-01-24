@@ -1,8 +1,7 @@
 package main
 
 import (
-	"fmt"
-	"lab5/trees"
+	anal "lab5/analytics"
 	"math/rand"
 	"time"
 )
@@ -10,8 +9,8 @@ import (
 func main() {
 	rand.Seed(time.Now().UnixNano())
 
-	t := &trees.Tree{}
+	a := anal.Analytics{}
 
-	t.Generate(10)
-	fmt.Println(t.IsValid())
+	a.Init()
+	a.RunTests()
 }

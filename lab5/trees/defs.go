@@ -9,6 +9,5 @@ type Node struct {
 
 // Tree structure contains tree representation
 type Tree struct {
-	sequence []int
-	root     *Node
+	Seq []int
 }

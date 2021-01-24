@@ -1,5 +1,9 @@
 package trees
 
+import (
+	"math"
+)
+
 // Generate creates random tree of given number of nodes
 func (t *Tree) Generate(n int) {
 	seq := randomArray(n)
@@ -35,15 +39,15 @@ func (t *Tree) Generate(n int) {
 		word = nil
 	}
 
-	t.sequence = append(prefix, sufix...)
+	t.Seq = append(prefix, sufix...)
 }
 
 // IsValid checks if generated sequence of braces represents valid binary tree.
 func (t *Tree) IsValid() bool {
 	partialSum := 0
 
-	for _, s := range t.sequence {
-		if s != -1 && s != 1 {
+	for _, s := range t.Seq {
+		if s != rightBracket && s != leftBracket {
 			return false
 		}
 
@@ -55,4 +59,43 @@ func (t *Tree) IsValid() bool {
 	}
 
 	return partialSum == 0
+}
+
+// Stats creates BST representation using generated sequence
+func (t *Tree) Stats() (int, int) {
+	idx := 0
+	min := math.MaxInt32
+	max := math.MinInt32
+
+	var rec func(level int) *Node
+	rec = func(level int) *Node {
+		if idx >= len(t.Seq) || t.Seq[idx] == rightBracket {
+			idx++
+			return nil
+		}
+
+		idx++
+
+		node := &Node{
+			left:  rec(level + 1),
+			right: nil,
+		}
+
+		if idx >= len(t.Seq) || t.Seq[idx] == rightBracket {
+			if node.left == nil && node.right == nil {
+				min = minInt(min, level)
+				max = maxInt(max, level)
+			}
+
+			idx++
+			return node
+		}
+
+		node.right = rec(level + 1)
+		return node
+	}
+
+	rec(0)
+
+	return min, max
 }

@@ -23,3 +23,19 @@ func randomArray(n int) (array []int) {
 
 	return array
 }
+
+func maxInt(x, y int) int {
+	if x > y {
+		return x
+	}
+
+	return y
+}
+
+func minInt(x, y int) int {
+	if x < y {
+		return x
+	}
+
+	return y
+}
