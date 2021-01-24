@@ -5,7 +5,7 @@ func (t *Tree) Generate(n int) {
 	seq := randomArray(n)
 
 	var prefix, sufix, word []int
-	var partialSum = 0
+	partialSum := 0
 
 	for _, s := range seq {
 		word = append(word, s)
@@ -36,4 +36,23 @@ func (t *Tree) Generate(n int) {
 	}
 
 	t.sequence = append(prefix, sufix...)
+}
+
+// IsValid checks if generated sequence of braces represents valid binary tree.
+func (t *Tree) IsValid() bool {
+	partialSum := 0
+
+	for _, s := range t.sequence {
+		if s != -1 && s != 1 {
+			return false
+		}
+
+		partialSum += s
+
+		if partialSum < 0 {
+			return false
+		}
+	}
+
+	return partialSum == 0
 }
