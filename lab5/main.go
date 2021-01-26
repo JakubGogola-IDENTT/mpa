@@ -12,7 +12,7 @@ func main() {
 	a := &anal.Analytics{}
 
 	a.Init()
-	// a.TestForDifferentN()
-	// a.TestUniformDistribution()
+	a.TestForDifferentN()
+	a.TestUniformDistribution()
 	a.TestProtecionNumber()
 }
