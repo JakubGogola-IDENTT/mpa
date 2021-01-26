@@ -9,8 +9,10 @@ import (
 func main() {
 	rand.Seed(time.Now().UnixNano())
 
-	a := anal.Analytics{}
+	a := &anal.Analytics{}
 
 	a.Init()
-	a.RunTests()
+	// a.TestForDifferentN()
+	// a.TestUniformDistribution()
+	a.TestProtecionNumber()
 }

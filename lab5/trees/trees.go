@@ -1,7 +1,9 @@
 package trees
 
 import (
+	"fmt"
 	"math"
+	"strings"
 )
 
 // Generate creates random tree of given number of nodes
@@ -98,4 +100,15 @@ func (t *Tree) Stats() (int, int) {
 	rec(0)
 
 	return min, max
+}
+
+// SeqToString returns stringified sequence representing tree
+func (t *Tree) SeqToString() string {
+	mapped := make([]string, len(t.Seq))
+
+	for i, v := range t.Seq {
+		mapped[i] = fmt.Sprint(v)
+	}
+
+	return strings.Join(mapped, "")
 }

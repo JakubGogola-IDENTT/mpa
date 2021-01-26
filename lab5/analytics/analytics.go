@@ -1,12 +1,10 @@
 package analytics
 
 import (
-	"bufio"
 	"flag"
 	"fmt"
 	"lab5/trees"
 	"log"
-	"os"
 )
 
 // Init sets testing params from flags
@@ -19,25 +17,20 @@ func (a *Analytics) Init() {
 	flag.Parse()
 }
 
-// RunTests performs algorithm tests with given params
-func (a *Analytics) RunTests() {
-	f, err := os.Create("results.csv")
+// TestForDifferentN performs algorithm tests with given params
+func (a *Analytics) TestForDifferentN() {
+	fmt.Println("Test: different n's")
 
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	w := bufio.NewWriter(f)
-
+	f, w := createFileWithWriter("results.csv")
 	defer f.Close()
 
-	_, err = w.WriteString("n,min,max\n")
+	t := &trees.Tree{}
+
+	_, err := w.WriteString("n,min,max\n")
 
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	t := trees.Tree{}
 
 	for n := a.lowerBound; n <= a.upperBound; n += a.step {
 		if n%100 == 0 {
@@ -54,6 +47,82 @@ func (a *Analytics) RunTests() {
 			if err != nil {
 				log.Fatal(err)
 			}
+		}
+
+		w.Flush()
+	}
+}
+
+// TestUniformDistribution test if trees for given n are generated with uniform distribution
+func (a *Analytics) TestUniformDistribution() {
+	fmt.Println("Test: uniform distribution")
+
+	f, w := createFileWithWriter("results_uniform.csv")
+	defer f.Close()
+
+	t := &trees.Tree{}
+
+	counter := make(map[string]int)
+
+	for r := 0; r < 10000000; r++ {
+		if r%100000 == 0 {
+			fmt.Printf("Progress: %d\n", r)
+		}
+
+		t.Generate(4)
+		counter[t.SeqToString()]++
+	}
+
+	_, err := w.WriteString("k,v\n")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for k, v := range counter {
+		_, err := w.WriteString(fmt.Sprintf("%s,%d\n", k, v))
+
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		w.Flush()
+	}
+}
+
+// TestProtecionNumber test protection number for given n
+func (a *Analytics) TestProtecionNumber() {
+	fmt.Println("Test: protection number")
+
+	f, w := createFileWithWriter("results_protection.csv")
+	defer f.Close()
+
+	t := &trees.Tree{}
+
+	_, err := w.WriteString("k,v\n")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	counter := make(map[int]int)
+
+	for r := 0; r < 10000000; r++ {
+		if r%100000 == 0 {
+			fmt.Printf("Progress: %d\n", r)
+		}
+
+		t.Generate(4)
+		min, _ := t.Stats()
+
+		counter[min]++
+	}
+
+	for k, v := range counter {
+		_, err := w.WriteString(fmt.Sprintf("%d,%d\n", k, v))
+
+		if err != nil {
+			log.Fatal(err)
 		}
 
 		w.Flush()
