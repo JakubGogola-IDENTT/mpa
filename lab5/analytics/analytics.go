@@ -107,12 +107,12 @@ func (a *Analytics) TestProtecionNumber() {
 
 	counter := make(map[int]int)
 
-	for r := 0; r < 10000000; r++ {
+	for r := 0; r < 1000000; r++ {
 		if r%100000 == 0 {
 			fmt.Printf("Progress: %d\n", r)
 		}
 
-		t.Generate(4)
+		t.Generate(500)
 		min, _ := t.Stats()
 
 		counter[min]++
